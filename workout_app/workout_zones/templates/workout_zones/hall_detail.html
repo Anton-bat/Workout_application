@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">More info about {{ hall.name }}</h1>
+            <p></p>
+        </div>
+    </div>
+</section>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {% if hall.hall_picture %}
+                <img src="{{ hall.hall_picture.url }}" class="card-img-top img-fluid mx-auto d-block small-img"
+                    alt="{{ hall.name }} - {{ hall.description }}">
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm flex-md-row">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ hall.name }}</h5>
+                        <p class="card-text">Description: {{ hall.description }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            {% for trainer in trainers %}
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                    <a href="{% url 'trainer_detail' trainer.pk %}">More about trainer in this zone</a>
+                                </button>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
