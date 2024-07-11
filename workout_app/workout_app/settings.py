@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "registration",
     "workout_zones",
     "trainers",
+    "reserve_pers_training",
 ]
 
 MIDDLEWARE = [
