@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {% if trainer.profile_picture %}
+                <img src="{{ trainer.profile_picture.url }}" class="card-img-top img-fluid mx-auto d-block small-img"
+                    alt="{{ trainer.name }}">
+                {% endif %}
+            </div>
+            <h2>Leave a Review for {{ trainer.name }}</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

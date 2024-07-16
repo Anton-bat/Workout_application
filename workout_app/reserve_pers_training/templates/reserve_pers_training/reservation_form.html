@@ -1,0 +1,109 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<head>
+    <meta charset="utf-8">
+    <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.14/index.global.min.css' rel='stylesheet' />
+    <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.14/index.global.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.14/index.global.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.14/index.global.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.14/index.global.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.14/index.global.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var events = JSON.parse('{{ events_json|safe }}');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'timeGridWeek',
+                slotMinTime: '08:00:00',
+                slotMaxTime: '18:00:00',
+                events: events,
+                selectable: true,
+                select: function (info) {
+                    var dateStr = info.startStr.split('T')[0];
+                    var startTimeStr = info.startStr.split('T')[1];
+                    var endTimeStr = info.endStr.split('T')[1];
+                    var form = document.getElementById('reservationForm');
+                    form.querySelector('input[name="date"]').value = dateStr;
+                    form.querySelector('input[name="start_time"]').value = startTimeStr;
+                    form.querySelector('input[name="end_time"]').value = endTimeStr;
+                    var modal = new bootstrap.Modal(document.getElementById('reservationModal'));
+                    modal.show();
+                },
+                eventTimeFormat: {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    meridiem: false
+                }
+            });
+            calendar.render();
+        });
+    </script>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-7">
+                <div id='calendar'></div>
+            </div>
+            <div class="col-md-5">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-lg-12 col-xl-11">
+                        <div class="card text-black" style="border-radius: 25px;">
+                            <div class="card-body p-md-5">
+                                <div class="row justify-content-center">
+                                    <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Reserve Training Session
+                                    </p>
+                                    {% if messages %}
+                                    <ul class="messages">
+                                        {% for message in messages %}
+                                        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                                            </li>
+                                            {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    <form class="mx-1 mx-md-4" method="post">
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                        <div class="mb-3">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"
+                                            action="{% url 'success_reservation' %}">Reserve</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservationModalLabel">Reserve Training Session</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="reservationForm" method="post" action="">
+                        {% csrf_token %}
+                        <input type="hidden" id="reservationDate" name="date">
+                        <input type="hidden" id="reservationStartTime" name="start_time">
+                        <input type="hidden" id="reservationEndTime" name="end_time">
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Reserve</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}
