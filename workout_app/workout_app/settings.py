@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "workout_zones",
     "trainers",
     "reserve_pers_training",
+    "review",
 ]
 
 MIDDLEWARE = [

@@ -9,6 +9,7 @@ urlpatterns = [
     path("halls/", include("workout_zones.urls")),
     path("trainers/", include("trainers.urls")),
     path("reserve/", include("reserve_pers_training.urls")),
+    path("review/", include("review.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

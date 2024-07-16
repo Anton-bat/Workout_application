@@ -24,11 +24,25 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ trainer.name }}</h5>
                         <p class="card-text">biography: {{ trainer.bio }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
+                        <div class="d-flex flex-column">
+                            <div class="mb-2">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">
                                     <a href="{% url 'create_reservation' trainer.pk %}">
                                         Reserve personal training
+                                    </a>
+                                </button>
+                            </div>
+                            <div class="mb-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                    <a href="{% url 'leave_review' trainer.pk %}">
+                                        Leave review about your experience with this trainer
+                                    </a>
+                                </button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                    <a href="{% url 'all_reviews' trainer.pk %}">
+                                        Look all review from the visitors
                                     </a>
                                 </button>
                             </div>
