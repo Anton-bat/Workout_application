@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
 from reserve_pers_training.models import Reserve
 
@@ -20,7 +20,8 @@ class TrainerDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        trainer = self.get_object()
+        trainer_id = self.kwargs.get("pk")
+        trainer = get_object_or_404(Trainer, pk=trainer_id)
         reservations = Reserve.objects.filter(trainer=trainer)
         context["reservations"] = reservations
 
