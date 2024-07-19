@@ -5,8 +5,10 @@ __pycache__/
 .DS_Store
 .env
 db.sqlite3
-# C extensions
+workout_app/media
+
 *.so
+
 
 # Distribution / packaging
 .Python
