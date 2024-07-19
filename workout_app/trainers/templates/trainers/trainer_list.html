@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">available trainers</h1>
+            <p class="lead text-body-secondary"> our specialists in this zone</p>
+            <p></p>
+        </div>
+    </div>
+</section>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for trainer in trainers %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    {% if trainer.profile_picture %}
+                    <img src="{{ trainer.profile_picture.url }}" class="card-img-top img-fluid"
+                        alt="{{ trainer.name }} - {{ trainer.bio }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ trainer.name }}</h5>
+                        <p class="card-text">biography: {{ trainer.bio }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                    <a href="{% url 'trainer_detail' trainer.pk %}">
+                                        More about this trainer
+                                    </a>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
