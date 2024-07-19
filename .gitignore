@@ -5,10 +5,10 @@ __pycache__/
 .DS_Store
 .env
 db.sqlite3
-workout_app/media
-
+/workout_app/media/
+venv
 *.so
-
+.vscode
 
 # Distribution / packaging
 .Python
